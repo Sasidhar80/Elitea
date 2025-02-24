@@ -8,6 +8,5 @@ namespace Nunit2
 {
     internal class Api_methods
     {
-        Console.WriteLine("Hello");
     }
 }
