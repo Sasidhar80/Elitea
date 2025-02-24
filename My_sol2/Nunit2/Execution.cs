@@ -125,4 +125,44 @@ namespace TestAutomation
         {
             // Arrange
             var client = new RestClient("https://api.example.com/pets");
-            var request = new RestRequest(Method.POST
+            var request = new RestRequest(Method.POST);
+            request.AddJsonBody(new { Name = "Buddy", Age = 3, Status = "Available", Tags = null });
+
+            // Act
+            var response = client.Execute(request);
+
+            // Assert
+            Assert.AreEqual(200, (int)response.StatusCode);
+        }
+
+        // Test case for TC-009
+        [Test]
+        public void TC_009_AddPet_InvalidCategoryId()
+        {
+            // Arrange
+            var client = new RestClient("https://api.example.com/pets");
+            var request = new RestRequest(Method.POST);
+            request.AddJsonBody(new { Name = "Buddy", Age = 3, Status = "Available", CategoryId = -1 });
+
+            // Act
+            var response = client.Execute(request);
+
+            // Assert
+            Assert.AreEqual(400, (int)response.StatusCode);
+        }
+
+        // Test case for TC-010
+        [Test]
+        public void TC_010_AddPet_NegativeAge()
+        {
+            // Arrange
+            var client = new RestClient("https://api.example.com/pets");
+            var request = new RestRequest(Method.POST);
+            request.AddJsonBody(new { Name = "Buddy", Age = -1, Status = "Available" });
+
+            // Act
+            var response = client.Execute(request);
+
+            // Assert
+            Assert.AreEqual(400, (int)response.StatusCode);
+        }
